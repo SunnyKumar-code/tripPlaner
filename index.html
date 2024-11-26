@@ -74,6 +74,26 @@
             overflow-y: auto;
             white-space: pre-wrap;
         }
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .loading img {
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         /* Responsive design */
         @media (max-width: 600px) {
@@ -100,6 +120,10 @@
         <label for="End-Date">End Date:</label>
         <input type="date" id="End-Date" name="End-Date" required><br><br>
         <input type="submit" value="Generate Trip" id="generateTrip">
+        <div class="loading" id="loading" style="display: none;">
+            <p>Generating your itinerary...</p>
+            <img src="llF5iyg___GIF___Imgur.gif" alt="Loading">
+        </div>
         <div id="itinerary" style="display: none;"></div>
     </div>
 
@@ -128,6 +152,13 @@
                 alert("Please fill all fields!");
                 return;
             }
+           
+            const loading = document.getElementById("loading");
+            const itineraryBox = document.getElementById("itinerary");
+
+            // Show the loading indicator
+            loading.style.display = "block";
+            itineraryBox.style.display = "none";
     
             const prompt = `Create a detailed day-by-day trip itinerary for a vacation based on the following input: 
                 Trip Place: ${destination} Start Date: ${startDate} End Date: ${endDate}. For each day of the trip, include the following details: 
@@ -159,6 +190,7 @@
 
     let tripBox = document.getElementById("itinerary");
             // Display formatted itinerary
+            loading.style.display = "none";
             tripBox.style.display = "block"
             tripBox.innerHTML = `
                 <h2>Itinerary for ${destination}</h2>

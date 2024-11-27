@@ -5,113 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trip</title>
-    <style>
-        /* Resetting some basic styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            padding: 20px;
-        }
-
-        .main {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        label {
-            font-size: 16px;
-            margin-bottom: 5px;
-            display: block;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        input[type="submit"] {
-            background-color: #3498db;
-            color: white;
-            cursor: pointer;
-            border: none;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #2980b9;
-        }
-
-        #itinerary {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: #ecf0f1;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            max-height: 400px;
-            overflow-y: auto;
-            white-space: pre-wrap;
-        }
-        .loading {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .loading img {
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* Responsive design */
-        @media (max-width: 600px) {
-            .main {
-                padding: 15px;
-                width: 100%;
-            }
-
-            input[type="submit"] {
-                padding: 12px;
-                font-size: 14px;
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div class="main">
+   
         <h1>Trip Guide</h1>
         <label for="Destination">Destination:</label>
         <input type="text" id="Destination" name="Destination"><br><br>
@@ -125,7 +23,7 @@
             <img src="llF5iyg___GIF___Imgur.gif" alt="Loading">
         </div>
         <div id="itinerary" style="display: none;"></div>
-    </div>
+ 
 
     <script type="importmap">
         {
@@ -135,70 +33,7 @@
         }
     </script>
 
-    <script type="module">
-        import { GoogleGenerativeAI } from "@google/generative-ai";
-    
-        // Fetch your API_KEY
-        const API_KEY = "AIzaSyDiiPQO9WgRDTrpqst0EeQxLQfV7KdrF6A";
-        const genAI = new GoogleGenerativeAI(API_KEY);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
-        document.getElementById("generateTrip").addEventListener("click", async function () {
-            const destination = document.getElementById("Destination").value;
-            const startDate = document.getElementById("Start-Date").value;
-            const endDate = document.getElementById("End-Date").value;
-    
-            if (!destination || !startDate || !endDate) {
-                alert("Please fill all fields!");
-                return;
-            }
-           
-            const loading = document.getElementById("loading");
-            const itineraryBox = document.getElementById("itinerary");
-
-            // Show the loading indicator
-            loading.style.display = "block";
-            itineraryBox.style.display = "none";
-    
-            const prompt = `Create a detailed day-by-day trip itinerary for a vacation based on the following input: 
-                Trip Place: ${destination} Start Date: ${startDate} End Date: ${endDate}. For each day of the trip, include the following details: 
-                Accommodation: Provide a list of options for hotels, hostels, or resorts based on location and budget (luxury, mid-range, budget-friendly). 
-                Include nightly prices in the local currency and booking platforms if possible. 
-                Things to Do: Recommend activities and must-visit places such as cultural landmarks, nature parks, adventure sports, and shopping districts. 
-                Include a brief description of each and the approximate cost for each activity. 
-                Food Options: Suggest local food experiences, including street food, popular restaurants, and regional must-try dishes. 
-                Include meal price ranges per person. Tickets/Entry Information: Provide details on tickets for activities or attractions, including entry fees, 
-                booking websites, or platforms (if applicable), and approximate costs. Transportation: Recommend transportation options between destinations, 
-                such as car rentals, public transport, or taxis. Include estimated prices or ticket costs for each mode of transport. 
-                Additional Tips: Provide essential travel tips such as safety recommendations, the best time to visit specific attractions, packing suggestions, 
-                and insider tips for making the most of the trip. Ensure the itinerary is realistic, engaging, and tailored to fit within the provided time frame 
-                (start date to end date), with a clear breakdown of activities, meals, and prices.
-                this data convert into the only rap in div tag formate like heading in h tag or paragraph format in p tag.
-                i dont want rapup in  three back tick 
-                `;
-    
-            const result = await model.generateContent(prompt);
-            console.log(result.response.text());
-    
-            // Extract and display the itinerary in a clean format
-            const itinerary = result.response.text();
-    
-            // Filter out unwanted disclaimers
-           let cleanItinerary = itinerary.replace(/I cannot provide a detailed itinerary.*/g, "");
-            cleanItinerary = itinerary.replace(/ ```html /, "");
-
-
-    let tripBox = document.getElementById("itinerary");
-            // Display formatted itinerary
-            loading.style.display = "none";
-            tripBox.style.display = "block"
-            tripBox.innerHTML = `
-                <h2>Itinerary for ${destination}</h2>
-                <h3>Start Date: ${startDate} | End Date: ${endDate}</h3>
-                ${cleanItinerary}
-            `;
-        });
-    </script>
+    <script type="module" src="script.js"></script>
     
 </body>
 

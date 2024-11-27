@@ -16,7 +16,7 @@ This project is a **Trip Planner Application** that helps users generate detaile
 
 ## Live Demo
 
-Experience the application live: [Trip Planner](https://sunnykumar-code.github.io/tripPlaner/)
+Experience the application live: [Trip Planner](https://sunnykumar-code.github.io/tripPlanner/)
 
 ## How It Works
 
